@@ -1,0 +1,30 @@
+OrdererOrgs:
+  - Name: Orderer
+    Domain: pcxchg.com
+    Specs:
+      - Hostname: orderer
+PeerOrgs:
+  - Name: Asus
+    Domain: Asus.com
+    Template:
+      Count: 1
+    Users:
+      Count: 1
+  - Name: Amazon
+    Domain: Amazon.com
+    Template:
+      Count: 1
+    Users:
+      Count: 1
+  - Name: Dell
+    Domain: Dell.com
+    Template:
+      Count: 1
+    Users:
+      Count: 1
+  - Name: HP
+    Domain: HP.com
+    Template:
+      Count: 1
+    Users:
+      Count: 1
