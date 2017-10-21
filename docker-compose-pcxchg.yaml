@@ -190,3 +190,59 @@ services:
       - peer0.Amazon.com
     networks:
       - pcxchg
+
+  ca.Amazon:
+    image: hyperledger/fabric-ca
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server-config
+      - FABRIC_CA_SERVER_CA_NAME=ca.Amazon
+    ports:
+      - "7054:7054"
+    command: sh -c 'fabric-ca-server start -b admin:adminpw'
+    volumes:
+      - ./crypto-config/peerOrganizations/Amazon.com/ca/root/:/etc/hyperledger/fabric-ca-server-config
+    container_name: ca.Amazon
+    networks:
+      - pcxchg
+
+  ca.Asus:
+    image: hyperledger/fabric-ca
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server-config
+      - FABRIC_CA_SERVER_CA_NAME=ca.Asus
+    ports:
+      - "8054:7054"
+    command: sh -c 'fabric-ca-server start -b admin:adminpw'
+    volumes:
+      - ./crypto-config/peerOrganizations/Asus.com/ca/root/:/etc/hyperledger/fabric-ca-server-config
+    container_name: ca.Asus
+    networks:
+      - pcxchg
+
+  ca.Dell:
+    image: hyperledger/fabric-ca
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server-config
+      - FABRIC_CA_SERVER_CA_NAME=ca.Dell
+    ports:
+      - "10054:7054"
+    command: sh -c 'fabric-ca-server start -b admin:adminpw'
+    volumes:
+      - ./crypto-config/peerOrganizations/Dell.com/ca/root/:/etc/hyperledger/fabric-ca-server-config
+    container_name: ca.Dell
+    networks:
+      - pcxchg
+
+  ca.HP:
+    image: hyperledger/fabric-ca
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server-config
+      - FABRIC_CA_SERVER_CA_NAME=ca.HP
+    ports:
+      - "9054:7054"
+    command: sh -c 'fabric-ca-server start -b admin:adminpw'
+    volumes:
+      - ./crypto-config/peerOrganizations/HP.com/ca/root/:/etc/hyperledger/fabric-ca-server-config
+    container_name: ca.HP
+    networks:
+      - pcxchg

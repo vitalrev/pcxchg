@@ -6,6 +6,32 @@ const target = [];
 const client = new hfc();
 let channel;
 
+var ca = require('fabric-ca-client');
+var User = require('fabric-client/lib/User.js');
+
+const enrolUserCA = function(client, opt) {
+  var admin;
+  // Create the ca client
+  const caClient= new ca(opt.ca_url, null, '')
+
+  return hfc.newDefaultKeyValueStore({ path: opt.wallet_path })
+  .then(wallet=>{
+    client.setStateStore(wallet);
+    return caClient.enroll({
+      enrollmentID: "admin",
+      enrollmentSecret: "adminpw"
+    });
+  }).then((enrollment)=>{
+    admin = new User("admin");
+    admin.setCryptoSuite(client.getCryptoSuite());
+    return admin.setEnrollment(enrollment.key, enrollment.certificate, opt.msp);
+  }).then(()=>{
+    return client.setUserContext(admin);
+  }).then(()=>{
+    return admin;
+  })
+};
+
 const enrolUser = function(client, options) {
   return hfc.newDefaultKeyValueStore({ path: options.wallet_path })
     .then(wallet => {
@@ -85,7 +111,8 @@ const catchEvent = function(eh, transactionID, timeout) {
 
 // Function invokes createPC on pcxchg
 function invoke(opt, param) {
-  return enrolUser(client, opt)
+  //return enrolUser(client, opt)
+  return enrolUserCA(client, opt)
     .then(user => {
       if(typeof user === "undefined" || !user.isEnrolled())
         throw "User not enrolled";
@@ -136,7 +163,9 @@ const options = {
     chaincode_id: 'pcxchg',
     peer_url: 'grpc://localhost:7051',
     orderer_url: 'grpc://localhost:7050',
-    event_url: 'grpc://localhost:7053'
+    event_url: 'grpc://localhost:7053',
+    ca_url: 'http://localhost:8054',
+    msp: `AsusMSP`
   },
   Hp : {
     wallet_path: '/Users/vitalijreicherdt/BlockChain/Fabric/B9Lab/pcxchg/producerApp/certs',
@@ -145,7 +174,9 @@ const options = {
     chaincode_id: 'pcxchg',
     peer_url: 'grpc://localhost:9051',
     orderer_url: 'grpc://localhost:7050',
-    event_url: 'grpc://localhost:9053'
+    event_url: 'grpc://localhost:9053',
+    ca_url: 'http://localhost:9054',
+    msp: `HPMSP`
   },
   Dell : {
     wallet_path: '/Users/vitalijreicherdt/BlockChain/Fabric/B9Lab/pcxchg/producerApp/certs',
@@ -154,7 +185,9 @@ const options = {
     chaincode_id: 'pcxchg',
     peer_url: 'grpc://localhost:10051',
     orderer_url: 'grpc://localhost:7050',
-    event_url: 'grpc://localhost:10053'
+    event_url: 'grpc://localhost:10053',
+    ca_url: 'http://localhost:10054',
+    msp: `DellMSP`
   }
 };
 
