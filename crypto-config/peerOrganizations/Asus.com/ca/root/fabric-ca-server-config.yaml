@@ -225,7 +225,7 @@ csr:
         O: Hyperledger
         OU: Fabric
    hosts:
-     - Vitalijs-MBP-2.fritz.box
+     - Vitalijs-MacBook-Pro-2.local
      - localhost
    ca:
       expiry: 131400h

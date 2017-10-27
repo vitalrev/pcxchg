@@ -1,4 +1,5 @@
 export FABRIC_CFG_PATH=./
+export PATH=~/BlockChain/Fabric/B9Lab/samples/fabric-samples/bin:$PATH
 
 configtxgen -profile PCXCHGOrdererGenesis -outputBlock ./orderer/genesis.block
 

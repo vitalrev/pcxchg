@@ -1,4 +1,3 @@
-2017/10/21 20:29:50 [INFO] User provided config file: crypto-config/ordererOrganizations/pcxchg.com/fabric-ca-client-config.yaml
-2017/10/21 20:29:50 [INFO] Configuration file location: /Users/vitalijreicherdt/BlockChain/Fabric/B9Lab/pcxchg/crypto-config/ordererOrganizations/pcxchg.com/fabric-ca-client-config.yaml
-2017/10/21 20:29:50 [INFO] Stored CA root certificate at /Users/vitalijreicherdt/BlockChain/Fabric/B9Lab/pcxchg/crypto-config/ordererOrganizations/pcxchg.com/msp/cacerts/localhost-7101.pem
-2017/10/21 20:29:50 [INFO] Stored CA intermediate certificates at /Users/vitalijreicherdt/BlockChain/Fabric/B9Lab/pcxchg/crypto-config/ordererOrganizations/pcxchg.com/msp/intermediatecerts/localhost-7101.pem
+2017/10/24 09:20:56 [INFO] User provided config file: crypto-config/ordererOrganizations/pcxchg.com/fabric-ca-client-config.yaml
+2017/10/24 09:20:56 [INFO] Configuration file location: /Users/vitalijreicherdt/BlockChain/Fabric/B9Lab/pcxchg/crypto-config/ordererOrganizations/pcxchg.com/fabric-ca-client-config.yaml
+2017/10/24 09:20:56 [INFO] Stored CA root certificate at /Users/vitalijreicherdt/BlockChain/Fabric/B9Lab/pcxchg/crypto-config/ordererOrganizations/pcxchg.com/msp/cacerts/localhost-7100.pem

@@ -11,13 +11,15 @@ ORGS="\
 "
 
 # If true, uses both a root and intermediate CA
-INTERMEDIATE_CA=true
+#INTERMEDIATE_CA=true
+INTERMEDIATE_CA=false
 
 # If true, recreate crypto if it already exists
 RECREATE=false
 
 # Path to fabric CA executables
 # TODO export GOPATH=./
+GOPATH=./
 FCAHOME=$GOPATH/src/github.com/hyperledger/fabric-ca
 SERVER=$FCAHOME/bin/fabric-ca-server
 CLIENT=$FCAHOME/bin/fabric-ca-client

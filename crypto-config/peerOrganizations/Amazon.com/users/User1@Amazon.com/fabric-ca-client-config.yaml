@@ -40,7 +40,7 @@
 #############################################################################
 
 # URL of the Fabric-ca-server (default: http://localhost:7054)
-url: http://localhost:7105
+url: http://localhost:7104
 
 # Membership Service Provider (MSP) directory
 # This is useful when the client is used to enroll a peer or orderer, so
@@ -99,7 +99,7 @@ csr:
       O: Hyperledger
       OU: Fabric
   hosts:
-    - Vitalijs-MBP-2.fritz.box
+    - Vitalijs-MacBook-Pro-2.local
   ca:
     pathlen:
     pathlenzero:
