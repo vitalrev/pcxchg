@@ -1,0 +1,102 @@
+Profiles:
+
+    PCXCHGOrdererGenesis:
+        Orderer:
+            <<: *OrdererDefaults
+            Organizations:
+                - *OrdererOrg
+        Consortiums:
+            PCXCHG:
+                Organizations:
+                    - *Asus
+                    - *Dell
+                    - *HP
+                    - *Amazon
+    AsusChannel:
+        Consortium: PCXCHG
+        Application:
+            <<: *ApplicationDefaults
+            Organizations:
+                - *Asus
+                - *Amazon
+    DellChannel:
+        Consortium: PCXCHG
+        Application:
+            <<: *ApplicationDefaults
+            Organizations:
+                - *Dell
+                - *Amazon
+    HPChannel:
+        Consortium: PCXCHG
+        Application:
+            <<: *ApplicationDefaults
+            Organizations:
+                - *HP
+                - *Amazon
+Organizations:
+
+    - &OrdererOrg
+        Name: OrdererMSP
+        ID: OrdererMSP
+
+        MSPDir: crypto-config/ordererOrganizations/pcxchg.com/msp
+
+    - &Asus
+        Name: AsusMSP
+        ID: AsusMSP
+
+        MSPDir: crypto-config/peerOrganizations/Asus.com/msp
+
+        AnchorPeers:
+            - Host: peer0.Asus.com
+              Port: 7051
+
+    - &Amazon
+        Name: AmazonMSP
+        ID: AmazonMSP
+
+        MSPDir: crypto-config/peerOrganizations/Amazon.com/msp
+
+        AnchorPeers:
+            - Host: peer0.Amazon.com
+              Port: 7051
+
+    - &Dell
+        Name: DellMSP
+        ID: DellMSP
+
+        MSPDir: crypto-config/peerOrganizations/Dell.com/msp
+
+        AnchorPeers:
+            - Host: peer0.Dell.com
+              Port: 7051
+
+    - &HP
+        Name: HPMSP
+        ID: HPMSP
+
+        MSPDir: crypto-config/peerOrganizations/HP.com/msp
+
+        AnchorPeers:
+            - Host: peer0.HP.com
+              Port: 7051
+
+Orderer: &OrdererDefaults
+    OrdererType: solo
+
+    Addresses:
+        - orderer.pcxchg.com:7050
+
+    BatchTimeout: 2s
+
+    BatchSize:
+
+        MaxMessageCount: 10
+        AbsoluteMaxBytes: 99 MB
+        PreferredMaxBytes: 512 KB
+
+    Organizations:
+
+
+Application: &ApplicationDefaults
+    Organizations:
