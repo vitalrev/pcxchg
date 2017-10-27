@@ -1,3 +1,0 @@
-2017/10/24 09:21:04 [INFO] User provided config file: crypto-config/peerOrganizations/HP.com/fabric-ca-client-config.yaml
-2017/10/24 09:21:04 [INFO] Configuration file location: /Users/vitalijreicherdt/BlockChain/Fabric/B9Lab/pcxchg/crypto-config/peerOrganizations/HP.com/fabric-ca-client-config.yaml
-2017/10/24 09:21:04 [INFO] Stored CA root certificate at /Users/vitalijreicherdt/BlockChain/Fabric/B9Lab/pcxchg/crypto-config/peerOrganizations/HP.com/msp/cacerts/localhost-7106.pem

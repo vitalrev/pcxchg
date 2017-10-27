@@ -1,3 +1,0 @@
-2017/10/24 09:21:06 [INFO] User provided config file: crypto-config/peerOrganizations/Dell.com/fabric-ca-client-config.yaml
-2017/10/24 09:21:06 [INFO] Configuration file location: /Users/vitalijreicherdt/BlockChain/Fabric/B9Lab/pcxchg/crypto-config/peerOrganizations/Dell.com/fabric-ca-client-config.yaml
-2017/10/24 09:21:06 [INFO] Stored CA root certificate at /Users/vitalijreicherdt/BlockChain/Fabric/B9Lab/pcxchg/crypto-config/peerOrganizations/Dell.com/msp/cacerts/localhost-7108.pem
