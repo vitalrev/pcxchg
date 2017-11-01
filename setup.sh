@@ -1,3 +1,6 @@
+# this script generates genesis block, channels tx and anchor tx
+# configuration see in configtx.yaml
+
 export FABRIC_CFG_PATH=./
 export PATH=~/BlockChain/Fabric/B9Lab/samples/fabric-samples/bin:$PATH
 

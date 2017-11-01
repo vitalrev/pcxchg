@@ -1,0 +1,3 @@
+2017/10/27 13:31:47 [INFO] User provided config file: crypto-config/peerOrganizations/Amazon.com/fabric-ca-client-config.yaml
+2017/10/27 13:31:47 [INFO] Configuration file location: /Users/vitalijreicherdt/BlockChain/Fabric/B9Lab/pcxchg/crypto-config/peerOrganizations/Amazon.com/fabric-ca-client-config.yaml
+2017/10/27 13:31:47 [INFO] Stored CA root certificate at /Users/vitalijreicherdt/BlockChain/Fabric/B9Lab/pcxchg/crypto-config/peerOrganizations/Amazon.com/msp/cacerts/localhost-7104.pem

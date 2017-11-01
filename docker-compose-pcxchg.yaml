@@ -4,22 +4,166 @@ networks:
   pcxchg:
 
 services:
-  orderer.pcxchg.com:
-    image: hyperledger/fabric-orderer:x86_64-1.0.0
-    container_name: orderer.pcxchg.com
+  zookeeper0:
+    container_name: zookeeper0
+    extends:
+      file: kafka.yaml
+      service: zookeeper
     environment:
-      - ORDERER_GENERAL_LISTENADDRESS=0.0.0.0
-      - ORDERER_GENERAL_GENESISMETHOD=file
-      - ORDERER_GENERAL_GENESISFILE=/var/hyperledger/orderer/orderer.genesis.block
-      - ORDERER_GENERAL_LOCALMSPID=OrdererMSP
-      - ORDERER_GENERAL_LOCALMSPDIR=/var/hyperledger/orderer/msp
-    volumes:
-      - ./orderer/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
-      - ./crypto-config/ordererOrganizations/pcxchg.com/orderers/orderer.pcxchg.com/msp:/var/hyperledger/orderer/msp
-    command: orderer
-    working_dir: /opt/gopath/src/github.com/hyperledger/fabric
+      - ZOO_MY_ID=1
+      - ZOO_SERVERS=server.1=zookeeper0:2888:3888 server.2=zookeeper1:2888:3888 server.3=zookeeper2:2888:3888
+    networks:
+      - pcxchg
+
+  zookeeper1:
+    container_name: zookeeper1
+    extends:
+      file: kafka.yaml
+      service: zookeeper
+    environment:
+      - ZOO_MY_ID=2
+      - ZOO_SERVERS=server.1=zookeeper0:2888:3888 server.2=zookeeper1:2888:3888 server.3=zookeeper2:2888:3888
+    networks:
+      - pcxchg
+
+  zookeeper2:
+    container_name: zookeeper2
+    extends:
+      file: kafka.yaml
+      service: zookeeper
+    environment:
+      - ZOO_MY_ID=3
+      - ZOO_SERVERS=server.1=zookeeper0:2888:3888 server.2=zookeeper1:2888:3888 server.3=zookeeper2:2888:3888
+    networks:
+      - pcxchg
+
+  kafka0:
+    container_name: kafka0
+    extends:
+      file: kafka.yaml
+      service: kafka
+    environment:
+      - KAFKA_BROKER_ID=0
+      - KAFKA_MIN_INSYNC_REPLICAS=2
+      - KAFKA_DEFAULT_REPLICATION_FACTOR=3
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeper0:2181,zookeeper1:2181,zookeeper2:2181
+    depends_on:
+      - zookeeper0
+      - zookeeper1
+      - zookeeper2
     ports:
-      - 7050:7050
+      - 9092:9092
+    networks:
+      - pcxchg
+
+  kafka1:
+    container_name: kafka1
+    extends:
+      file: kafka.yaml
+      service: kafka
+    environment:
+      - KAFKA_BROKER_ID=1
+      - KAFKA_DEFAULT_REPLICATION_FACTOR=3
+      - KAFKA_MIN_INSYNC_REPLICAS=2
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeper0:2181,zookeeper1:2181,zookeeper2:2181
+    depends_on:
+      - zookeeper0
+      - zookeeper1
+      - zookeeper2
+    ports:
+      - 10092:9092
+    networks:
+      - pcxchg
+
+  kafka2:
+    container_name: kafka2
+    extends:
+      file: kafka.yaml
+      service: kafka
+    environment:
+      - KAFKA_BROKER_ID=2
+      - KAFKA_DEFAULT_REPLICATION_FACTOR=3
+      - KAFKA_MIN_INSYNC_REPLICAS=2
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeper0:2181,zookeeper1:2181,zookeeper2:2181
+    depends_on:
+      - zookeeper0
+      - zookeeper1
+      - zookeeper2
+    ports:
+      - 11092:9092
+    networks:
+      - pcxchg
+
+  kafka3:
+    container_name: kafka3
+    extends:
+      file: kafka.yaml
+      service: kafka
+    environment:
+      - KAFKA_BROKER_ID=3
+      - KAFKA_DEFAULT_REPLICATION_FACTOR=3
+      - KAFKA_MIN_INSYNC_REPLICAS=2
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeper0:2181,zookeeper1:2181,zookeeper2:2181
+    depends_on:
+      - zookeeper0
+      - zookeeper1
+      - zookeeper2
+    ports:
+      - 12092:9092
+    networks:
+      - pcxchg
+
+  orderer0.pcxchg.com:
+    container_name: orderer0.pcxchg.com
+    extends:
+      file: orderer.yaml
+      service: orderer
+    volumes:
+      - ./crypto-config/ordererOrganizations/pcxchg.com/orderers/orderer0.pcxchg.com/msp:/var/hyperledger/orderer/msp
+    depends_on:
+      - zookeeper0
+      - zookeeper1
+      - zookeeper2
+      - kafka0
+      - kafka1
+      - kafka2
+      - kafka3
+    networks:
+      - pcxchg
+
+  orderer1.pcxchg.com:
+    container_name: orderer1.pcxchg.com
+    extends:
+      file: orderer.yaml
+      service: orderer
+    volumes:
+      - ./crypto-config/ordererOrganizations/pcxchg.com/orderers/orderer1.pcxchg.com/msp:/var/hyperledger/orderer/msp
+    depends_on:
+      - zookeeper0
+      - zookeeper1
+      - zookeeper2
+      - kafka0
+      - kafka1
+      - kafka2
+      - kafka3
+    networks:
+      - pcxchg
+
+  orderer2.pcxchg.com:
+    container_name: orderer2.pcxchg.com
+    extends:
+      file: orderer.yaml
+      service: orderer
+    volumes:
+      - ./crypto-config/ordererOrganizations/pcxchg.com/orderers/orderer2.pcxchg.com/msp:/var/hyperledger/orderer/msp
+    depends_on:
+      - zookeeper0
+      - zookeeper1
+      - zookeeper2
+      - kafka0
+      - kafka1
+      - kafka2
+      - kafka3
     networks:
       - pcxchg
 
@@ -40,7 +184,9 @@ services:
       - 7051:7051
       - 7053:7053
     depends_on:
-      - orderer.pcxchg.com
+      - orderer0.pcxchg.com
+      - orderer1.pcxchg.com
+      - orderer2.pcxchg.com
     networks:
       - pcxchg
 
@@ -61,7 +207,9 @@ services:
       - 10051:7051
       - 10053:7053
     depends_on:
-      - orderer.pcxchg.com
+      - orderer0.pcxchg.com
+      - orderer1.pcxchg.com
+      - orderer2.pcxchg.com
     networks:
       - pcxchg
 
@@ -82,17 +230,9 @@ services:
       - 9051:7051
       - 9053:7053
     depends_on:
-      - orderer.pcxchg.com
-    networks:
-      - pcxchg
-
-  couchdbAmazon:
-    container_name: couchdbAmazon
-    image: hyperledger/fabric-couchdb
-    environment:
-      DB_URL: http://localhost:5984/
-    ports:
-      - "5984:5984"
+      - orderer0.pcxchg.com
+      - orderer1.pcxchg.com
+      - orderer2.pcxchg.com
     networks:
       - pcxchg
 
@@ -107,16 +247,15 @@ services:
       - CORE_PEER_LOCALMSPID=AmazonMSP
       - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp/peer/
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.Amazon.com:7051
-      - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
-      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdbAmazon:5984
     volumes:
       - ./crypto-config/peerOrganizations/Amazon.com/peers/peer0.Amazon.com/msp:/etc/hyperledger/msp/peer
     ports:
       - 8051:7051
       - 8053:7053
     depends_on:
-      - orderer.pcxchg.com
-      - couchdbAmazon
+      - orderer0.pcxchg.com
+      - orderer1.pcxchg.com
+      - orderer2.pcxchg.com
     networks:
       - pcxchg
 
@@ -133,7 +272,6 @@ services:
     volumes:
       - ./crypto-config/peerOrganizations/Asus.com:/etc/hyperledger/msp
     depends_on:
-      - orderer.pcxchg.com
       - peer0.Asus.com
     networks:
       - pcxchg
@@ -151,7 +289,6 @@ services:
     volumes:
       - ./crypto-config/peerOrganizations/Dell.com:/etc/hyperledger/msp
     depends_on:
-      - orderer.pcxchg.com
       - peer0.Dell.com
     networks:
       - pcxchg
@@ -169,7 +306,6 @@ services:
     volumes:
       - ./crypto-config/peerOrganizations/HP.com:/etc/hyperledger/msp
     depends_on:
-      - orderer.pcxchg.com
       - peer0.HP.com
     networks:
       - pcxchg
